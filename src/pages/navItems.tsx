@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 export const mainListItems = (
   <React.Fragment>
-    <Link to="/dashboard">
+    <Link to="/dashboard" style={{ textDecoration: "none" }}>
       <ListItemButton>
         <ListItemIcon>
           <DashboardIcon />
@@ -21,24 +21,30 @@ export const mainListItems = (
         <ListItemText primary="Watch List" />
       </ListItemButton>
     </Link>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="IRR" />
-    </ListItemButton>
+    <Link to="/undervalued" style={{ textDecoration: "none" }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Undervalued" />
+      </ListItemButton>
+    </Link>
+    <Link to="/addstonk">
+      <ListItemButton>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Add Company" />
+      </ListItemButton>
+    </Link>
+    <Link to="/irr" style={{ textDecoration: "none" }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="IRR" />
+      </ListItemButton>
+    </Link>
     <ListItemButton>
       <ListItemIcon>
         <LayersIcon />
@@ -50,26 +56,28 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
-    </ListSubheader>
+    {/* 
+    This is just sketching out an idea: what if below the sidebar are all of the stocks in the watch list?
+    <Link to={`/stonkdetail/${stonks[0]}`} 
+    */}
+    <ListSubheader component="div">Your Watchlist</ListSubheader>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="ALLY" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Last quarter" />
+      <ListItemText primary="BABA" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
+      <ListItemText primary="CMG" />
     </ListItemButton>
   </React.Fragment>
 );

@@ -2,6 +2,7 @@ import * as React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
+import { green, purple } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,12 +13,11 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
+import { mainListItems, secondaryListItems } from "./navItems";
 // import Chart from "./Chart";
 // import Deposits from "./Deposits";
 // import Orders from "./Orders";
@@ -26,10 +26,10 @@ import Home from "./Home";
 import AddStonk from "./AddStonk";
 import IRR from "./IRR";
 import StonkDetails from "./StonkDetails";
-import Header from "./components/Header";
 import UserContext, { UserProvider } from "../data/context/UserContext";
-import CardList from "./Dashboard";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import WatchList from "./WatchList";
+import { Route, Routes } from "react-router-dom";
+import Undervalued from "./Undervalued";
 
 function Copyright(props: any) {
   return (
@@ -100,7 +100,16 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: purple[500],
+    },
+    secondary: {
+      main: green[500],
+    },
+  },
+});
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
@@ -171,8 +180,8 @@ export default function Dashboard() {
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+                ? theme.palette.background
+                : theme.palette.background,
             flexGrow: 1,
             height: "100vh",
             overflow: "auto",
@@ -185,7 +194,8 @@ export default function Dashboard() {
                 {() => (
                   <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/dashboard" element={<CardList />} />
+                    <Route path="/dashboard" element={<WatchList />} />
+                    <Route path="/undervalued" element={<Undervalued />} />
                     <Route path="/addstonk" element={<AddStonk />} />
                     <Route path="/irr" element={<IRR />} />
                     <Route
@@ -195,38 +205,6 @@ export default function Dashboard() {
                   </Routes>
                 )}
               </UserContext.Consumer>
-              {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  {/* <Chart /> */}
-                </Paper>
-              </Grid>
-              {/* Recent Deposits */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                  }}
-                >
-                  {/* <Deposits /> */}
-                </Paper>
-              </Grid>
-              Recent Orders
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  {/* <Orders /> */}
-                </Paper>
-              </Grid>
             </Grid>
             <Copyright sx={{ pt: 4 }} />
           </Container>

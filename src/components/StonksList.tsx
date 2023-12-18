@@ -8,80 +8,51 @@ import {
   Avatar,
   Divider,
 } from "@mui/material";
-import Stonk from "./NCAVStonk";
-import ModalStonk from "./Stonk/ModalStonk";
-
-type Stonk = {
-  companyName: string;
-  forwardConservativeGrahamFormulaNumber: number;
-  // forwardGrahamFormulaNumber: Number,
-  // futureGrowthRate: Number,
-  pastConservativeGrahamFormulaNumber: number;
-  // pastGrahamFormulaNumber: Number,
-  // previousGrowthRate: Number,
-  // grahamNumber: Number,
-  latestPrice: number;
-  changePercent: number;
-  symbol: string;
-  peRatio: number;
-};
+import { StonkType } from "../types/StonkType";
+import isUndervalued from "../utilities/isUndervalued";
 
 type Props = {
-  stonks: Array<Stonk>;
+  stonks: Array<StonkType>;
 };
 
 export default function (props: Props) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   return (
     <List
       dense
       sx={{ width: "500%", maxWidth: 800, bgcolor: "background.paper" }}
     >
       {props.stonks.map((stonk, index) => {
-        const isUndervalued =
-          stonk.forwardConservativeGrahamFormulaNumber > stonk.latestPrice &&
-          stonk.pastConservativeGrahamFormulaNumber > stonk.latestPrice
-            ? {
-                color: "green",
-                fontWeight: "700",
-              }
-            : {};
+        const showAsUndervalued = isUndervalued(stonk)
+          ? {
+              color: "green",
+              fontWeight: "700",
+            }
+          : {};
         return (
           <>
             <ListItem key={index} disablePadding>
-              <ListItemButton onClick={() => handleOpen()}>
-                <ListItemAvatar>
-                  <Avatar
-                    alt={`Avatar n°${index + 1}`}
-                    src={`https://storage.googleapis.com/iex/api/logos/${stonk.symbol}.png`}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  id={stonk.companyName}
-                  primary={stonk.companyName}
-                  secondary={stonk.symbol}
-                  style={{
-                    ...isUndervalued,
-                    maxWidth: "400px",
-                    minWidth: "400px",
-                  }}
+              <ListItemAvatar>
+                <Avatar
+                  alt={`Avatar n°${index + 1}`}
+                  src={`https://storage.googleapis.com/iex/api/logos/${stonk.symbol}.png`}
                 />
-                <ListItemText
-                  primary={"$" + stonk.latestPrice}
-                  style={{ ...isUndervalued, justifyItems: "start" }}
-                />
-              </ListItemButton>
+              </ListItemAvatar>
+              <ListItemText
+                id={stonk.companyName}
+                primary={stonk.companyName}
+                secondary={stonk.symbol}
+                style={{
+                  ...showAsUndervalued,
+                  maxWidth: "400px",
+                  minWidth: "400px",
+                }}
+              />
+              <ListItemText
+                primary={"$" + stonk.latestPrice}
+                style={{ ...showAsUndervalued, justifyItems: "start" }}
+              />
             </ListItem>
             {index < props.stonks.length - 1 && <Divider />}
-            {/* <ModalStonk
-              key={`stonk-${index}`}
-              open={open}
-              handleClose={handleClose}
-              {...stonk}
-            /> */}
           </>
         );
       })}

@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Home from "./pages/Home";
 import MuiDashboard from "./pages/MuiDashboardLayout";
-import AddStonk from "./pages/AddStonk";
 import IRR from "./pages/IRR";
 import StonkDetails from "./pages/StonkDetails";
 import Header from "./components/Header";

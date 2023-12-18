@@ -6,6 +6,8 @@ import StonkCards from "../components/StonkCards";
 import SortCardsDropdown from "../components/SortCardsDropdown";
 import "./dashboard.css";
 import MobileHeader from "../components/Header/MobileHeader";
+import StonksList from "../components/StonksList";
+import { Typography } from "@mui/material";
 
 export default function StonksDashboard() {
   const context = useContext(UserContext);
@@ -16,15 +18,31 @@ export default function StonksDashboard() {
     state: { stonks, sortedStonks, isLoading, isMobile },
   } = context;
 
-  return (
-    <>
+  return isMobile ? (
+    <main className="stonks-container" data-testid="stonks-container">
+      <MobileHeader pageName="DASHBOARD" />
       <MarketBanner />
       <SortCardsDropdown dispatch={sortStonks} />
+      {isLoading === true ? (
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+          <StonkSkeleton key={`skeleton-${item}`} />
+        ))
+      ) : (
+        <StonksList stonks={stonks} />
+      )}
+    </main>
+  ) : (
+    <>
+      <MarketBanner />
+
       <main className="stonks-container" data-testid="stonks-container">
-        <StonkCards
-          stonks={sortedStonks.length ? sortedStonks : stonks}
-          removeStonk={removeStonk}
-        />
+        {isLoading === true ? (
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+            <StonkSkeleton key={`skeleton-${item}`} />
+          ))
+        ) : (
+          <StonksList stonks={stonks} />
+        )}
       </main>
     </>
   );
