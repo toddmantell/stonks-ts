@@ -40,44 +40,51 @@ export default function (props: Props) {
       dense
       sx={{ width: "500%", maxWidth: 800, bgcolor: "background.paper" }}
     >
-      {props.stonks.map((stonk, index) => (
-        <>
-          <ListItem key={index} disablePadding>
-            <ListItemButton onClick={() => handleOpen()}>
-              <ListItemAvatar>
-                <Avatar
-                  alt={`Avatar n°${index + 1}`}
-                  src={`https://storage.googleapis.com/iex/api/logos/${stonk.symbol}.png`}
+      {props.stonks.map((stonk, index) => {
+        const isUndervalued =
+          stonk.forwardConservativeGrahamFormulaNumber > stonk.latestPrice &&
+          stonk.pastConservativeGrahamFormulaNumber > stonk.latestPrice
+            ? {
+                color: "green",
+                fontWeight: "700",
+              }
+            : {};
+        return (
+          <>
+            <ListItem key={index} disablePadding>
+              <ListItemButton onClick={() => handleOpen()}>
+                <ListItemAvatar>
+                  <Avatar
+                    alt={`Avatar n°${index + 1}`}
+                    src={`https://storage.googleapis.com/iex/api/logos/${stonk.symbol}.png`}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  id={stonk.companyName}
+                  primary={stonk.companyName}
+                  secondary={stonk.symbol}
+                  style={{
+                    ...isUndervalued,
+                    maxWidth: "400px",
+                    minWidth: "400px",
+                  }}
                 />
-              </ListItemAvatar>
-              <ListItemText
-                id={stonk.companyName}
-                primary={stonk.companyName}
-                secondary={stonk.symbol}
-                style={
-                  stonk.forwardConservativeGrahamFormulaNumber >
-                    stonk.latestPrice &&
-                  stonk.pastConservativeGrahamFormulaNumber > stonk.latestPrice
-                    ? {
-                        color: "green",
-                        fontWeight: "700",
-                      }
-                    : {}
-                }
-              />
-              <ListItemText primary={stonk.latestPrice} />
-            </ListItemButton>
-          </ListItem>
-          {index < props.stonks.length - 1 && <Divider />}
-          <ModalStonk
-            key={`stonk-${index}`}
-            open={open}
-            handleClose={handleClose}
-            {...stonk}
-          />
-          ;
-        </>
-      ))}
+                <ListItemText
+                  primary={"$" + stonk.latestPrice}
+                  style={{ ...isUndervalued, justifyItems: "start" }}
+                />
+              </ListItemButton>
+            </ListItem>
+            {index < props.stonks.length - 1 && <Divider />}
+            {/* <ModalStonk
+              key={`stonk-${index}`}
+              open={open}
+              handleClose={handleClose}
+              {...stonk}
+            /> */}
+          </>
+        );
+      })}
     </List>
   );
 }
