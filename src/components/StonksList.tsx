@@ -31,11 +31,7 @@ export default function (props: Props) {
           : {};
         return (
           <>
-            <Link
-              key={index}
-              to={"/detail/" + stonk.symbol}
-              style={{ textDecoration: "none" }}
-            >
+            <Link key={index} to={"/detail/" + stonk.symbol}>
               <ListItem key={index} disablePadding>
                 <ListItemAvatar>
                   <Avatar

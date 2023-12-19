@@ -1,7 +1,7 @@
 const baseFetchOptions = {
   mode: "cors",
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "text/plain",
   },
 };
 

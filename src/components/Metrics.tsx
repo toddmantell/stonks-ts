@@ -1,3 +1,4 @@
+import { AddCircleOutlineOutlined } from "@mui/icons-material";
 import React from "react";
 
 const Metrics = ({ stonkQuote, stonk, addStonkToStonks }) => (
@@ -74,13 +75,15 @@ const Metrics = ({ stonkQuote, stonk, addStonkToStonks }) => (
       )}
     </div>
     <div className="metrics-section--button">
-      <button
-        type="submit"
-        className={stonk ? "form-button" : "form-button__hidden"}
-        onClick={addStonkToStonks}
-      >
-        Add Stonk
-      </button>
+      {stonk && (
+        <a
+          type="submit"
+          style={{ cursor: "pointer" }}
+          onClick={addStonkToStonks}
+        >
+          <AddCircleOutlineOutlined /> Add Stonk
+        </a>
+      )}
     </div>
   </div>
 );
