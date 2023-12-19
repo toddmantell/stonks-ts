@@ -18,18 +18,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import { mainListItems, secondaryListItems } from "./navItems";
-// import Chart from "./Chart";
-// import Deposits from "./Deposits";
-// import Orders from "./Orders";
 
-import Home from "./Home";
-import AddStonk from "./AddStonk";
-import IRR from "./IRR";
-import StonkDetails from "./StonkDetails";
-import UserContext, { UserProvider } from "../data/context/UserContext";
-import WatchList from "./WatchList";
+import Home from "../pages/Home";
+import AddStonk from "../pages/AddStonk";
+import IRR from "../pages/IRR";
+import StonkDetails from "../pages/StonkDetails";
+import UserContext from "../data/context/UserContext";
+import WatchList from "../pages/WatchList";
 import { Route, Routes } from "react-router-dom";
-import Undervalued from "./Undervalued";
+import Undervalued from "../pages/Undervalued";
 
 function Copyright(props: any) {
   return (
@@ -117,6 +114,10 @@ export default function Dashboard() {
     setOpen(!open);
   };
 
+  const {
+    state: { stonks },
+  } = React.useContext(UserContext);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
@@ -172,7 +173,7 @@ export default function Dashboard() {
           <List component="nav">
             {mainListItems}
             <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
+            {secondaryListItems(stonks)}
           </List>
         </Drawer>
         <Box
@@ -184,7 +185,7 @@ export default function Dashboard() {
                 : theme.palette.background,
             flexGrow: 1,
             height: "100vh",
-            overflow: "auto",
+            overflow: "visible",
           }}
         >
           <Toolbar />
@@ -193,15 +194,12 @@ export default function Dashboard() {
               <UserContext.Consumer>
                 {() => (
                   <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<WatchList />} />
                     <Route path="/dashboard" element={<WatchList />} />
                     <Route path="/undervalued" element={<Undervalued />} />
                     <Route path="/addstonk" element={<AddStonk />} />
                     <Route path="/irr" element={<IRR />} />
-                    <Route
-                      path="/stonkdetail/:ticker"
-                      element={<StonkDetails />}
-                    />
+                    <Route path="/detail/:symbol" element={<StonkDetails />} />
                   </Routes>
                 )}
               </UserContext.Consumer>

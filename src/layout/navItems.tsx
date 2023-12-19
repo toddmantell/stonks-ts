@@ -3,28 +3,30 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import PeopleIcon from "@mui/icons-material/People";
+import Visibility from "@mui/icons-material/Visibility";
+import Check from "@mui/icons-material/Check";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import AddCircleOutlined from "@mui/icons-material/AddCircleOutlineOutlined";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link } from "react-router-dom";
+import UserContext from "../data/context/UserContext";
+import { StonkType } from "../types/StonkType";
 
 export const mainListItems = (
   <React.Fragment>
-    <Link to="/dashboard" style={{ textDecoration: "none" }}>
+    <Link to="/dashboard">
       <ListItemButton>
         <ListItemIcon>
-          <DashboardIcon />
+          <Visibility />
         </ListItemIcon>
         <ListItemText primary="Watch List" />
       </ListItemButton>
     </Link>
-    <Link to="/undervalued" style={{ textDecoration: "none" }}>
+    <Link to="/undervalued">
       <ListItemButton>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <Check />
         </ListItemIcon>
         <ListItemText primary="Undervalued" />
       </ListItemButton>
@@ -32,12 +34,12 @@ export const mainListItems = (
     <Link to="/addstonk">
       <ListItemButton>
         <ListItemIcon>
-          <PeopleIcon />
+          <AddCircleOutlined />
         </ListItemIcon>
         <ListItemText primary="Add Company" />
       </ListItemButton>
     </Link>
-    <Link to="/irr" style={{ textDecoration: "none" }}>
+    <Link to="/irr">
       <ListItemButton>
         <ListItemIcon>
           <BarChartIcon />
@@ -54,30 +56,25 @@ export const mainListItems = (
   </React.Fragment>
 );
 
-export const secondaryListItems = (
-  <React.Fragment>
-    {/* 
+export const secondaryListItems = (stonks: Array<StonkType>) => {
+  return (
+    <div style={{ overflow: "visible" }}>
+      <ListSubheader component="div">Your Watchlist</ListSubheader>
+      {/* 
     This is just sketching out an idea: what if below the sidebar are all of the stocks in the watch list?
     <Link to={`/stonkdetail/${stonks[0]}`} 
     */}
-    <ListSubheader component="div">Your Watchlist</ListSubheader>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="ALLY" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="BABA" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="CMG" />
-    </ListItemButton>
-  </React.Fragment>
-);
+      {stonks.length &&
+        stonks.map((stonk: StonkType, index: number) => (
+          <Link key={index} to={"/detail/" + stonk.symbol}>
+            <ListItemButton>
+              <ListItemIcon>
+                <AssignmentIcon />
+              </ListItemIcon>
+              <ListItemText primary={stonk.symbol} />
+            </ListItemButton>
+          </Link>
+        ))}
+    </div>
+  );
+};

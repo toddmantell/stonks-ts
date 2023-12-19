@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { StonkType } from "../types/StonkType";
 import isUndervalued from "../utilities/isUndervalued";
+import { Link } from "react-router-dom";
 
 type Props = {
   stonks: Array<StonkType>;
@@ -30,28 +31,34 @@ export default function (props: Props) {
           : {};
         return (
           <>
-            <ListItem key={index} disablePadding>
-              <ListItemAvatar>
-                <Avatar
-                  alt={`Avatar n°${index + 1}`}
-                  src={`https://storage.googleapis.com/iex/api/logos/${stonk.symbol}.png`}
+            <Link
+              key={index}
+              to={"/detail/" + stonk.symbol}
+              style={{ textDecoration: "none" }}
+            >
+              <ListItem key={index} disablePadding>
+                <ListItemAvatar>
+                  <Avatar
+                    alt={`Avatar n°${index + 1}`}
+                    src={`https://storage.googleapis.com/iex/api/logos/${stonk.symbol}.png`}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  id={stonk.companyName}
+                  primary={stonk.companyName}
+                  secondary={stonk.symbol}
+                  style={{
+                    ...showAsUndervalued,
+                    maxWidth: "400px",
+                    minWidth: "400px",
+                  }}
                 />
-              </ListItemAvatar>
-              <ListItemText
-                id={stonk.companyName}
-                primary={stonk.companyName}
-                secondary={stonk.symbol}
-                style={{
-                  ...showAsUndervalued,
-                  maxWidth: "400px",
-                  minWidth: "400px",
-                }}
-              />
-              <ListItemText
-                primary={"$" + stonk.latestPrice}
-                style={{ ...showAsUndervalued, justifyItems: "start" }}
-              />
-            </ListItem>
+                <ListItemText
+                  primary={"$" + stonk.latestPrice}
+                  style={{ ...showAsUndervalued, justifyItems: "start" }}
+                />
+              </ListItem>
+            </Link>
             {index < props.stonks.length - 1 && <Divider />}
           </>
         );

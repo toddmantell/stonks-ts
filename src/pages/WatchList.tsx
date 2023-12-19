@@ -9,7 +9,7 @@ import MobileHeader from "../components/Header/MobileHeader";
 import StonksList from "../components/StonksList";
 import { Typography } from "@mui/material";
 
-export default function StonksDashboard() {
+export default function WatchList() {
   const context = useContext(UserContext);
 
   const {
