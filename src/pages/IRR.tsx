@@ -2,27 +2,31 @@
 import React, { useContext, useEffect, useState } from "react";
 import ValuationProbabilities from "../components/ValuationProbabilities";
 import UserContext from "../data/context/UserContext";
+import { Typography } from "@mui/material";
 
 import "./irr.css";
 import "../components/typeahead.css";
 import IRRWidget from "../components/CalculateIRR";
 import MobileHeader from "../components/Header/MobileHeader";
+import { StonkType } from "../types/StonkType";
 
-export default function IRR(props) {
+export default function IRR() {
   const { stonks, isMobile } = useContext(UserContext).state;
 
-  const [chosenStonk, setChosenStonk] = useState({});
+  const [chosenStonk, setChosenStonk] = useState<StonkType>({});
   const [priceChartData, setPriceChartData] = useState([]);
   const [percentageChartData, setPercentageChartData] = useState([]);
 
-  const setTickerAndPassStonk = (stonk) => {
+  window.scrollTo(100, 0);
+
+  const setTickerAndPassStonk = (stonk: StonkType) => {
     stonk && setChosenStonk(stonk);
   };
 
   return (
     <>
-      {isMobile && <MobileHeader pageName="IRR CALCULATOR" />}
       <main className="irr-container">
+        <Typography>IRR CALCULATOR</Typography>
         <section className="irrform">
           <div>Calculate Stonk IRR</div>
           <LocalTypeahead

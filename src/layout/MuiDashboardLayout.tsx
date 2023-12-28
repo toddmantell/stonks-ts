@@ -17,7 +17,11 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./navItems";
+import {
+  MainListItems,
+  desktopListItems,
+  secondaryListItems,
+} from "./navItems";
 
 import Home from "../pages/Home";
 import AddStonk from "../pages/AddStonk";
@@ -46,13 +50,13 @@ function Copyright(props: any) {
   );
 }
 
-const drawerWidth: number = 240;
-
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
-const AppBar = styled(MuiAppBar, {
+const drawerWidth: number = 240;
+
+const DesktopAppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -100,10 +104,10 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme({
   palette: {
     primary: {
-      main: purple[500],
+      main: green[500],
     },
     secondary: {
-      main: green[500],
+      main: purple[500],
     },
   },
 });
@@ -118,64 +122,56 @@ export default function Dashboard() {
     state: { stonks },
   } = React.useContext(UserContext);
 
+  const isMobile = window.innerWidth < 681;
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
-          <Toolbar
-            sx={{
-              pr: "24px", // keep right padding when drawer closed
-            }}
+        {!isMobile ? (
+          <DesktopAppBar />
+        ) : (
+          <MuiAppBar
+            position="fixed"
+            color="primary"
+            sx={{ top: "auto", bottom: 0 }}
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
+            <Toolbar
               sx={{
-                marginRight: "36px",
-                ...(open && { display: "none" }),
+                pr: "24px", // keep right padding when drawer closed
               }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
+              <MainListItems />
+              <IconButton color="inherit">
+                <Badge badgeContent={4} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Toolbar>
+          </MuiAppBar>
+        )}
+        {!isMobile && (
+          <Drawer variant="permanent" open={open}>
+            <Toolbar
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                px: [1],
+              }}
             >
-              Dashboard
-            </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List component="nav">
-            {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems(stonks)}
-          </List>
-        </Drawer>
+              <IconButton onClick={toggleDrawer}>
+                <ChevronLeftIcon />
+              </IconButton>
+            </Toolbar>
+            <Divider />
+            <List component="nav">
+              {desktopListItems}
+              <Divider sx={{ my: 1 }} />
+              {secondaryListItems(stonks)}
+            </List>
+          </Drawer>
+        )}
         <Box
           component="main"
           sx={{

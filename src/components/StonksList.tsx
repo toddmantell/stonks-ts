@@ -18,10 +18,7 @@ type Props = {
 
 export default function (props: Props) {
   return (
-    <List
-      dense
-      sx={{ width: "500%", maxWidth: 800, bgcolor: "background.paper" }}
-    >
+    <List dense sx={{ bgcolor: "background.paper" }}>
       {props.stonks.map((stonk, index) => {
         const showAsUndervalued = isUndervalued(stonk)
           ? {
@@ -45,8 +42,8 @@ export default function (props: Props) {
                   secondary={stonk.symbol}
                   style={{
                     ...showAsUndervalued,
-                    maxWidth: "400px",
-                    minWidth: "400px",
+                    maxWidth: "300px",
+                    minWidth: "300px",
                   }}
                 />
                 <ListItemText

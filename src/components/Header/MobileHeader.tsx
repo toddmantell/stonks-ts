@@ -6,7 +6,8 @@ export default ({ pageName = "STONKS" }) => (
       <span>
         <img
           className="mobile-header-image"
-          src="../../../stonks.jpg"
+          style={{ height: "45px", width: "58px" }}
+          src="../../../favicon.ico"
           alt="header-logo"
         />
       </span>
