@@ -20,7 +20,7 @@ export default function WatchList() {
 
   return isMobile ? (
     <main className="stonks-container" data-testid="stonks-container">
-      <MobileHeader pageName="DASHBOARD" />
+      <MobileHeader pageName="Watch List" />
       <MarketBanner />
       <SortCardsDropdown dispatch={sortStonks} />
       {isLoading === true ? (

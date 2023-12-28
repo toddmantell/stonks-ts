@@ -1,14 +1,15 @@
 export type StonkType = {
   companyName: string;
   forwardConservativeGrahamFormulaNumber: number;
-  // forwardGrahamFormulaNumber: Number,
-  // futureGrowthRate: Number,
+  forwardGrahamFormulaNumber: number;
+  futureGrowthRate?: number;
   pastConservativeGrahamFormulaNumber: number;
-  // pastGrahamFormulaNumber: Number,
-  // previousGrowthRate: Number,
-  // grahamNumber: Number,
+  pastGrahamFormulaNumber: number;
+  previousGrowthRate?: number;
+  grahamnumber: number;
   latestPrice: number;
   changePercent: number;
   symbol: string;
   peRatio: number;
+  ttmEPS?: number;
 };

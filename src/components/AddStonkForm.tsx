@@ -1,6 +1,15 @@
 import React from "react";
 import Typeahead from "./TypeAhead";
 import Button from "@mui/material/Button";
+import { Box, TextField } from "@mui/material";
+
+type Props = {
+  getStonkCalculation: Function;
+  setTickerAndGetQuote: Function;
+  setInputValue: Function;
+  previousGrowthRate: number | string;
+  futureGrowthRate: number | string;
+};
 
 const AddStonkForm = ({
   getStonkCalculation,
@@ -8,69 +17,57 @@ const AddStonkForm = ({
   setInputValue,
   previousGrowthRate,
   futureGrowthRate,
-}) => (
-  <form
+}: Props) => (
+  <Box
+    component="form"
+    sx={{
+      "& .MuiTextField-root": { m: 1, width: "25ch" },
+    }}
+    noValidate
+    autoComplete="off"
     data-testid="add-stonk-form"
     className="add-stonk-form"
-    onSubmit={getStonkCalculation}
   >
     <h2 data-testid="form-heading" className="add-stonk-heading">
       Add A New Stonk:
     </h2>
     <div>
-      <label
-        htmlFor="stonk-symbol"
-        data-testid="stonk-symbol-label"
-        className="input-label"
-      >
-        Enter Stonk Symbol:
-      </label>
-      <Typeahead setTickerAndGetQuote={setTickerAndGetQuote} />
-    </div>
-    <div>
-      <label
-        id="previous-growth-label"
-        htmlFor="previous-growth-rate"
-        data-testid="previous-growth-label"
-        className="input-label"
-      >
-        Previous 5 Year Growth Rate:
-      </label>
-      <input
-        type="text"
-        id="previous-growth-rate"
-        aria-labelledby="previous-growth-label"
-        placeholder="Previous growth rate"
-        data-testid="previous-growth-rate"
-        className="textbox"
-        onChange={setInputValue}
-        value={previousGrowthRate || ""}
+      <Typeahead
+        setTickerAndGetQuote={setTickerAndGetQuote}
+        placeholder="Search By Ticker"
       />
     </div>
     <div>
-      <label
-        id="future-growth-label"
-        htmlFor="future-growth-rate"
-        data-testid="future-growth-label"
-        className="input-label"
-      >
-        Expected Future Growth Rate:
-      </label>
-      <input
-        type="text"
+      <TextField
+        id="previous-growth-rate"
+        placeholder="High growth rate"
+        aria-placeholder="High growth rate"
+        data-testid="low-growth-rate"
+        onChange={setInputValue}
+        value={previousGrowthRate || ""}
+        label="High Growth Rate"
+        variant="outlined"
+        size="small"
+      />
+    </div>
+    <div>
+      <TextField
         id="future-growth-rate"
-        aria-labelledby="future-growth-label"
-        placeholder="Future growth rate"
-        data-testid="future-growth-rate"
+        placeholder="Low growth rate"
+        data-testid="low-growth-rate"
         className="textbox"
         onChange={setInputValue}
         value={futureGrowthRate || ""}
+        aria-placeholder="Low Growth Rate"
+        label="Low Growth Rate"
+        size="small"
+        variant="outlined"
       />
     </div>
-    <Button variant="outlined" type="submit">
+    <Button variant="outlined" onClick={getStonkCalculation}>
       Get Calculation
     </Button>
-  </form>
+  </Box>
 );
 
 export default AddStonkForm;

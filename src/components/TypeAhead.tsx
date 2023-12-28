@@ -4,10 +4,15 @@ import { get } from "../data/fetchWrapper";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 
 const APIURL = getDevOrProdAPIURL();
+type Props = {
+  setTickerAndGetQuote: Function;
+  placeholder: string;
+};
 
 export default function Typeahead({
   setTickerAndGetQuote = () => console.log("no handler provided to typeahead"),
-}) {
+  placeholder = "",
+}: Props) {
   const [suggestions, setSuggestions] = useState([]);
   const [text, setText] = useState("");
 
@@ -66,7 +71,7 @@ export default function Typeahead({
     <div className="TypeAheadDropDown">
       <input
         onChange={onTextChange}
-        placeholder="Search Stonks"
+        placeholder={placeholder}
         value={text}
         type="text"
       />
