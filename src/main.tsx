@@ -4,7 +4,8 @@ import App from "./App.jsx";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // Disabling Strict Mode because it's causing duplicate fetch calls
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );
